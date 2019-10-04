@@ -19,6 +19,7 @@ int main(int argc, char const *argv[])
     cin >> puertoRemoto;
     cout << "Ingrese ip del servidor: ";
     cin >> ipRemota;
+    cin.ignore();
     
     /**
      * Si es cliente inicializar con:
@@ -26,7 +27,7 @@ int main(int argc, char const *argv[])
      * pidiendo el puerto y direccion ip remotos al usuario.
      */
     
-    SocketDatagrama socket  = SocketDatagrama(7200, ipRemota);
+    SocketDatagrama socket  = SocketDatagrama(0);
     PaqueteDatagrama paquete_recv = PaqueteDatagrama(MAX_BUFF_TAM);
 
     while(1)

@@ -35,18 +35,18 @@ int main(int argc, char const *argv[])
     {
         bytes_recv = socket.recibe(paquete_recv);
 
-        if (bytes_recv < 0)
+        if (bytes_recv >= 0)
         {
-            perror("Error al recibir");
-            exit(1);
+            char * ipRemota = paquete_recv.obtieneDireccion();
+            int puertoRemoto = paquete_recv.obtienePuerto();
+            cout << "Bytes recibidos: " << bytes_recv << endl;
+            cout << "Cliente dijo: " << paquete_recv.obtieneDatos() << endl;
+            cout << "Recibido desde ip: " <<  ipRemota << endl;
+            cout << "Con puerto: " << puerto << endl;
+            PaqueteDatagrama paquete_env = PaqueteDatagrama(crespuesta, tam, ipRemota, puertoRemoto);
+            bytes_env = socket.envia(paquete_env);
         }
 
-        cout << "Cliente dijo: " << paquete_recv.obtieneDatos() << endl;
-        cout << "Recibido desde ip: " << paquete_recv.obtieneDireccion() << endl;
-        cout << "Con puerto: " << htons(paquete_recv.obtienePuerto()) << endl;
-
-        PaqueteDatagrama paquete_env = PaqueteDatagrama(crespuesta, tam, cIpAddress, puerto);
-        bytes_env = socket.envia(paquete_env);
     }
     
 	return 0;

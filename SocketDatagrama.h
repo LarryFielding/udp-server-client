@@ -24,20 +24,6 @@ public:
 	 * @param puerto Número de puerto.
 	 */
 	SocketDatagrama(int puerto);
-
-	/**
-	 * @brief Crea un socket de tipo datagrama e inicializa
-	 * los datos necesarios para la comunicación.
-	 * @details Este constructor esta diseñado para utilizarse en
-	 * el cliente de la comunicación. El puerto local será
-	 * asignado por el sistema, mientras que el puerto y dirección
-	 * remotos deben ser proporcionados para poder enviar mensajes
-	 * al servidor.
-	 * 
-	 * @param puertoRemoto [description]
-	 * @param ipRemota [description]
-	 */
-	SocketDatagrama(int puertoRemoto, char * ipRemota);
 	
 	~SocketDatagrama();
 
