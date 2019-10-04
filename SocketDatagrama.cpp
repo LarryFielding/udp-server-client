@@ -60,7 +60,7 @@ int SocketDatagrama::recibe(PaqueteDatagrama &p)
 	tam_dir = sizeof(direccionForanea);
 	cout << "Esperando mensaje..." << endl;
 	
-	bytes_recv = recvfrom(s, p.obtieneDatos(), MAX_BUFF_TAM, 0, (struct sockaddr *) &direccionForanea, &tam_dir);
+	bytes_recv = recvfrom(s, p.obtieneDatos(), p.obtieneLongitud(), 0, (struct sockaddr *) &direccionForanea, &tam_dir);
 	if (bytes_recv < 0)
 	{
 		perror("Error al recibir");
@@ -78,25 +78,18 @@ int SocketDatagrama::recibe(PaqueteDatagrama &p)
 int SocketDatagrama::envia(PaqueteDatagrama &p)
 {
 	int bytes_env;
-	unsigned int tam_msj;
 	socklen_t tam_dir;
 
 	tam_dir = sizeof(direccionForanea);
-	tam_msj = p.obtieneLongitud();
-
-	// Obtiene datos de a dónde se envía el paquete:
-	int puertoRemoto = p.obtienePuerto();
-	char * ipRemota = p.obtieneDireccion();
-	cout << "Ip remota: " << ipRemota; 
 
 
 	/* Llenar estructura (direccion remota) */
 	memset(&direccionForanea, 0, sizeof(direccionForanea));
 	direccionForanea.sin_family = AF_INET;
-	direccionForanea.sin_addr.s_addr = inet_addr(ipRemota);
-	direccionForanea.sin_port = htons(puertoRemoto);
+	direccionForanea.sin_addr.s_addr = inet_addr(p.obtieneDireccion());
+	direccionForanea.sin_port = htons(p.obtienePuerto());
 
-	bytes_env = sendto(s, p.obtieneDatos(), tam_msj, 0, (struct sockaddr *) &direccionForanea, tam_dir);
+	bytes_env = sendto(s, p.obtieneDatos(), p.obtieneLongitud(), 0, (struct sockaddr *) &direccionForanea, tam_dir);
 	if (bytes_env < 0)
 	{
 		perror("Fallo en envio");
