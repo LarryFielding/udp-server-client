@@ -34,7 +34,7 @@ SocketDatagrama::SocketDatagrama(int puerto)
 	
 	/* Paso 3: asegurarse de que se puede utilizar el puerto */
 
-	if (setsockopt(s,SOL_SOCKET,SO_REUSEADDR,&opc,sizeof(int)) < 0)
+	if (setsockopt(s,SOL_SOCKET,SO_BROADCAST,&opc,sizeof(int)) < 0)
 	{
         perror("setsockopt");
         exit(1);
